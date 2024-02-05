@@ -34,7 +34,7 @@ export interface IPlantas {
   Id_Lote: number;
 }
 export interface ILote {
-  id?: number;
+  id: number;
   Id_Proyecto: number;
   Codigo_Lote: string;
   Nombre: string;
@@ -43,6 +43,17 @@ export interface ILote {
   Activo?: boolean;
   Usuario: number;
   Areas?: number[];
+  Poligonos?: number[];
+}
+export interface IArea {
+  id: number;
+  id_Lote: number;
+  Codigo_Area: string;
+  Nombre: string;
+  Variedad: string;
+  Hectareas?: number;
+  Activo?: boolean;
+  Usuario: number;
   Poligonos?: number[];
 }
 export interface IUser {
@@ -60,7 +71,7 @@ export interface IUser {
   user:             number;
 }
 export interface IRol{
-  id?: number;
+  id: number;
   name: string,
   permissions?: number[]
 }
