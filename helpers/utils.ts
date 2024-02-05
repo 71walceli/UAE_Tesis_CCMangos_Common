@@ -5,7 +5,5 @@ export const printStackTrace = (e: Error): string[] =>
 interface indexedT {
   id: number;
 }
-export const arrayIndexer = <T extends indexedT>(values: T[]): {[key: number]: T[]} => 
+export const arrayIndexer = <T extends indexedT>(values: T[]): {[key: number]: number} => 
   values.reduce( (actual, cur, i) => Object.assign(actual, { [cur.id]: i} ), {} )
-
-

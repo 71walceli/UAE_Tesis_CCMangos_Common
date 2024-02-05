@@ -6,17 +6,14 @@ import {
   AuthInterface,
   TokenResponse,
 } from "../interfaces/models";
-import { useAuth } from "../context/AuthContext";
 import { Endpoints } from "./routes";
-
-import 'rsuite/dist/rsuite.min.css';
 
 
 export const useApiController = (authContext) => {
   //#region AxiosConfig
   const { login,  UserData } = authContext;
   const ApiTokenRequest = axios.create({
-    baseURL: Endpoints.BaseURL + Endpoints.Api + Endpoints.login,
+    baseURL: Endpoints.BaseURL + Endpoints.login,
     headers: {
       "Content-Type": "application/x-www-form-urlencoded",
     },
@@ -24,7 +21,7 @@ export const useApiController = (authContext) => {
   });
 
   const ApiRequest = axios.create({
-    baseURL: Endpoints.BaseURL + Endpoints.Api,
+    baseURL: Endpoints.BaseURL,
     headers: {
       "Content-Type": "application/json",
       ...(UserData?.access_token !== ""  && UserData?.access_token !==undefined? { Authorization: `Bearer ${UserData?.access_token}` } : {}),
@@ -32,14 +29,14 @@ export const useApiController = (authContext) => {
   });
 
   const ApiPostFileRequest = axios.create({
-    baseURL: Endpoints.BaseURL + Endpoints.Api,
+    baseURL: Endpoints.BaseURL,
     headers: {
       "Content-Type": "multipart/form-data",
       Authorization: `Bearer ${UserData?.access_token}`,
     },
   });
 
-  const getData = <T>(request: Promise<I>): Promise<T> => request
+  const getData = <T>(request: Promise<T>): Promise<T> => request
     .then(({ data }: AxiosResponse<T>) => data)
     .catch((e) => { throw e })
   const get = <T>(endpoint: string, params?: object,): Promise<T> => 
