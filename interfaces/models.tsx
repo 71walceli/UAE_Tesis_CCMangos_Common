@@ -28,15 +28,18 @@ export interface ApiErrorResponse {
 export interface IPlantas {
   id: number;
   Disabled: boolean;
-  Codigo_Planta: string;
+  Codigo_Planta: string;  // Código solamente de esta entidad
+  Codigo: string; // Código resultante de los padres y la entidad
+  Codigo_Area: string;  // Código solamente del padre
   Nombre: string;
   Activo: boolean;
-  Id_Lote: number;
+  Id_Area: number;
 }
 export interface ILote {
   id: number;
   Id_Proyecto: number;
-  Codigo_Lote: string;
+  Codigo_Lote: string;  // Código solamente de esta entidad
+  Codigo: string; // Código resultante de los padres y la entidad
   Nombre: string;
   Variedad: string;
   Hectareas?: number;
@@ -47,8 +50,10 @@ export interface ILote {
 }
 export interface IArea {
   id: number;
-  id_Lote: number;
-  Codigo_Area: string;
+  Id_Lote: number;
+  Codigo_Area: string;  // Código solamente de esta entidad
+  Codigo: string; // Código resultante de los padres y la entidad
+  Codigo_Lote: string;  // Código solamente del padre
   Nombre: string;
   Variedad: string;
   Hectareas?: number;
