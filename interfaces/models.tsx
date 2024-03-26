@@ -82,27 +82,27 @@ export interface IRol{
 }
 
 export interface IPermissions {
-  id:           number;
-  name:         string;
-  codename:     string;
+  id: number;
+  name: string;
+  codename: string;
   content_type: number;
 }
 
 export interface ILectura {
-  id: number | null;
-  E1: number | null;
-  E2: number | null;
-  E3: number | null;
-  E4: number | null;
-  E5: number | null;
-  GR1: number | null;
-  GR2: number | null;
-  GR3: number | null;
-  GR4: number | null;
-  GR5: number | null;
-  Cherelles: null | number;
-  Observacion: string;
-  FechaVisita: Date;
-  Activo: boolean;
+  id: number;
   Id_Planta: number;
+
+  CantidadInflorescencias: number;
+  CantidadFrutonIniciales: number;
+  CantidadFrutosMaduración: number;
+  CantidadInflorescenciasPerdidas: number;
+  Enfermedades: number[];
+  Observacion: string;
+
+  FechaVisita: Date;
+  FechaRegistro: Date;
+  Activo: boolean;
+  Id_Usuario: number;
+  GUIDLectura: string;
+  SyncId: string;
 }
