@@ -62,18 +62,18 @@ export interface IArea {
   Poligonos?: number[];
 }
 export interface IUser {
-  id:               number;
-  is_superuser:     boolean;
-  username:         string;
-  first_name:       string;
-  last_name:        string;
-  email:            string;
-  is_staff:         boolean;
-  is_active:        boolean;
-  groups:           number[];
+  id: number;
+  is_superuser: boolean;
+  username: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  is_staff: boolean;
+  is_active: boolean;
+  groups: number[];
   user_permissions: any[];
-  cedula:           string;
-  user:             number;
+  cedula: string;
+  user: number;
 }
 export interface IRol{
   id: number;
@@ -106,3 +106,42 @@ export interface ILectura {
   GUIDLectura: string;
   SyncId: string;
 }
+
+export interface IProduccion {
+  id: number;
+  Id_Area: number;
+  Id_Lote: number;
+  Cantidad: number;
+  Fecha: Date;
+  FechaRegistro: Date;
+  Activo: boolean;
+  Id_Usuario: number;
+}
+export interface IRegistroClima {
+  id: number;
+  
+  Temp_Air_Mean: number,
+  Temp_Air_Min: number,
+  Temp_Air_Max: number,
+  
+  Dew_Temp_Mean: number,
+  Dew_Temp_Max: number,
+  Dew_Temp_Min: number,
+  
+  Relat_Hum_Mean: number,
+  Relat_Hum_Min: number,
+  Relat_Hum_Max: number,
+  
+  Precipitation: number,
+  
+  Wind_Speed_Mean: number,
+  Wind_Speed_Min: number,
+  Wind_Speed_Max: number,
+  
+  Atmospheric_Pressure_Max: number,
+  Atmospheric_Pressure_Min: number,
+
+  Date: Date;
+  Activo: boolean;
+}
+

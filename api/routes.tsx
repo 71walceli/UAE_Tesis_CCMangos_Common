@@ -17,6 +17,6 @@ export const Endpoints = {
   Users:'/auth/users',
   Roles:'/auth/roles',
   Produccion: "/produccion/",
-  Upload:"upload",
+  PlantasFotoUpload:"plantas/fotos/upload/",
   Permissions:"/auth/permissions"
 };

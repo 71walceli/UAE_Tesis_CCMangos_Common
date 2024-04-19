@@ -1,11 +1,6 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import axios, { AxiosError, AxiosResponse } from "axios";
 
-import {
-  ApiErrorResponse,
-  AuthInterface,
-  TokenResponse,
-} from "../interfaces/models";
+import { ApiErrorResponse, AuthInterface, TokenResponse, } from "../interfaces/models";
 import { Endpoints } from "./routes";
 
 
