@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosResponse } from "axios";
 
 import { ApiErrorResponse, AuthInterface, TokenResponse, } from "../interfaces/models";
 import { Endpoints } from "./routes";
+import { PromiseQueue } from '../../../Common/utils/FifoPromiseQueue';
 
 
 export const useApiController = (authContext) => {
@@ -23,54 +24,27 @@ export const useApiController = (authContext) => {
     },
   });
 
-  const ApiPostFileRequest = axios.create({
-    baseURL: Endpoints.BaseURL,
-    headers: {
-      "Content-Type": "multipart/form-data",
-      Authorization: `Bearer ${UserData?.access_token}`,
-    },
-  });
+  const queue = new PromiseQueue();
 
-  const getData = <T>(request: Promise<T>): Promise<T> => request
+  const doRequest = <T>(request: Promise<T>): Promise<T> => queue.enqueue(() => request)
     .then(({ data }: AxiosResponse<T>) => data)
     .catch((e) => { throw e })
   const get = <T>(endpoint: string, params?: object,): Promise<T> => 
-    getData(ApiRequest.get(endpoint, { params }));
+    doRequest(ApiRequest.get(endpoint, { params }));
   const post = <T>(endpoint: string, data?: object, params?: object): Promise<T> => 
-    getData(ApiRequest.post(endpoint, data, { params }));
+    doRequest(ApiRequest.post(endpoint, data, { params }));
   const patch = <T>(endpoint: string, data?: object, params?: object): Promise<T> => 
-    getData(ApiRequest.patch(endpoint, data, { params }));
+    doRequest(ApiRequest.patch(endpoint, data, { params }));
   const remove = <T>(endpoint: string, params?: object): Promise<T> => 
-    getData(ApiRequest.delete(endpoint, { params }));
+    doRequest(ApiRequest.delete(endpoint, { params }));
 
-  const postRequestToken = async <T extends TokenResponse>(
-    data: AuthInterface
-  ): Promise<T> => {
-    return await ApiTokenRequest.request({
-      data,
-    })
-      .then(({ data }: AxiosResponse<T>) => {
-        login(data);
-        console.log(data);
-        return data;
-      })
-      .catch((error: AxiosError<ApiErrorResponse>) => {
-        console.log(JSON.stringify(error, null, 3));
-        throw error;
-      })
-  };
+  const putFile = (endpoint: string, file, options) => {
+    doRequest(ApiRequest.put(endpoint, file, {
+      headers: {
+        "Content-Disposition": `attachment; filename=Screenshot_20240409_124452.png`
+      },
+    }))
+  }
 
-  const postFileRequest = async <T>(
-    endpoint: string,
-    data?: object,
-    params?: object
-  ): Promise<T> => {
-    return await ApiPostFileRequest.post(endpoint, data, { params })
-      .then(({ data }: AxiosResponse<T>) => data)
-      .catch((error: AxiosError<ApiErrorResponse>) => {
-        throw error;
-      })
-  };
-
-  return { get, post, patch, remove, postRequestToken, postFileRequest };
+  return { get, post, patch, remove, putFile };
 };
