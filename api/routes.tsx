@@ -8,6 +8,7 @@ export const Endpoints = {
   lotes: "/lotes/",
   áreas: "/areas/",
   enfermedad: "/enfermedades/",
+  variedad: "/variedades/",
   Poligonos: "/geolotes/",
   Lectura: "/lecturas/",
   Plantas: "/plantas/",
@@ -18,5 +19,8 @@ export const Endpoints = {
   Roles:'/auth/roles',
   Produccion: "/produccion/",
   PlantasFotoUpload:"plantas/fotos/upload/",
-  Permissions:"/auth/permissions"
+  Permissions:"/auth/permissions",
+  PrediccionesClima: "/predicciones/clima",
+  PrediccionesCosecha: "/predicciones/cosechas",
+  PrediccionesActualizar: "/predicciones/actualizar",
 };
