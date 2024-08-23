@@ -22,5 +22,6 @@ export const Endpoints = {
   Permissions:"/auth/permissions",
   PrediccionesClima: "/predicciones/clima",
   PrediccionesCosecha: "/predicciones/cosechas",
-  PrediccionesActualizar: "/predicciones/actualizar",
+  PrediccionesActualizar: "/predicciones/reentrenar",
+  PrediccionesMetricas: "/predicciones/metricas",
 };
