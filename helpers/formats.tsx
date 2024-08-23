@@ -18,3 +18,7 @@ export const numberFormatter = (value: string | number | undefined) => {
   const valueConverted = Number(value)
   return !Number.isNaN(valueConverted) ? valueConverted : null
 }
+
+export const formatNumber = (value: number | undefined, docimals=2) => {
+  return value ? Number(value).toFixed(docimals) : null
+}
