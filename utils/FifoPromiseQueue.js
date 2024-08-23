@@ -3,7 +3,6 @@ export class PromiseQueue {
   queue = [];
   resultCallbacks = []
   pendingResultOrdinal = 0;
-  pendingPromise = false;
   stop = false;
   currentOrdinal = 0;
 
@@ -20,20 +19,25 @@ export class PromiseQueue {
     });
   }
 
-  dequeue() {
-    if (this.queue.length === 0) {
+  dequeue(_ordinal) {
+    const firstResult = this.resultCallbacks.find(({ordinal}) => ordinal === _ordinal);
+    if (firstResult) {
+      this.pendingResultOrdinal++;
+      firstResult.callback();
+      this.resultCallbacks.shift();
+    }
+    /* if (this.queue.length === 0) {
       this.resultCallbacks
         .sort((item1, item2) => item2.ordinal - item1.ordinal)
         .forEach(({callback, ordinal}) => {
           if (ordinal === this.pendingResultOrdinal) {
             this.pendingResultOrdinal++;
-            this.pendingPromise = true;
             callback();
             this.resultCallbacks.shift()
           }
         });
       return false;
-    }
+    } */
     if (this.stop) {
       this.queue = [];
       this.stop = false;
@@ -48,12 +52,13 @@ export class PromiseQueue {
         .then((value) => {
           this.resultCallbacks.push({
             callback: () => {
+              console.log({ordinal: item.ordinal, value});
               item.resolve(value);
             },
             ordinal: item.ordinal,
           });
           item.state = "Resolved"
-          this.dequeue();
+          this.dequeue(item.ordinal);
         })
         .catch(err => {
           this.resultCallbacks.push({
@@ -63,7 +68,7 @@ export class PromiseQueue {
             ordinal: item.ordinal,
           });
           item.state = "Rejected"
-          this.dequeue();
+          this.dequeue(item.ordinal);
         })
     } catch (err) {
       this.resultCallbacks.push({
@@ -73,7 +78,7 @@ export class PromiseQueue {
         ordinal: item.ordinal,
       });
       item.state = "Rejected"
-      this.dequeue();
+      this.dequeue(item.ordinal);
     }
     return true;
   }

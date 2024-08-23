@@ -5,10 +5,13 @@ export const parsePolygon = (string: string) => string.trim() !== ""
     .map(([lat, lng]) => ({ lat: Number(lat), lng: Number(lng) }))
   :[]
 
-export const getCenter = (polygon: {lat: number, lng: number}[]) => center({ 
-  type: "Polygon", 
-  coordinates: [polygon.map(({ lat, lng }) => [lng, lat])] 
-}).geometry.coordinates.reverse()
+export const getCenter = (polygon: {lat: number, lng: number}[]) => {
+  const _center = center({
+    type: "Polygon",
+    coordinates: [polygon.map(({ lat, lng }) => [lng, lat])]
+  }).geometry.coordinates.reverse();
+  return { lat: _center[0], lng: _center[1] };
+}
 
 /**
  * @param polygon {lat: number, lng: number}[]
